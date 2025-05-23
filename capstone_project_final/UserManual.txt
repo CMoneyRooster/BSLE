@@ -1,0 +1,67 @@
+# Capstone File Transfer Utility - User Manual
+
+## Overview
+This utility provides a secure, multi-user file server and a Python-based client for file operations over a custom protocol.
+
+## Requirements
+- Python 3.8+
+- gcc / g++ (Ubuntu 20.04)
+- Make
+
+## Build Instructions
+
+1. Run `make` from the project root:
+   ```bash
+   make
+   ```
+
+2. The server binary will be located at `bin/capstone`.
+
+## Run Server
+
+```bash
+./bin/capstone -t <timeout_seconds> -d ./server_root -p <port>
+```
+
+Example:
+```bash
+./bin/capstone -t 300 -d ./server_root -p 9090
+```
+
+This creates a root folder `server_root` if it doesn't exist, sets session timeout to 300 seconds, and listens on port 9090.
+
+## Run Client
+
+```bash
+python3 client/client.py --ip <server_ip> --port <port>
+```
+
+Example:
+```bash
+python3 client/client.py --ip 127.0.0.1 --port 9090
+```
+
+## Interactive Client Commands
+
+| Command             | Description                                   |
+|---------------------|-----------------------------------------------|
+| `login <u> <p>`     | Log in with username and password             |
+| `get <src> <dst>`   | Get a file from the server                    |
+| `put <src> <dst>`   | Upload a file to the server                   |
+| `mkdir <path>`      | Create a directory on the server              |
+| `delete <path>`     | Delete a file on the server                   |
+| `l_ls [path]`       | List contents of local directory              |
+| `l_delete <path>`   | Delete local file                             |
+| `l_mkdir <path>`    | Create a local directory                      |
+| `help`              | Show command help                             |
+| `quit` / `exit`     | Exit the client                               |
+
+## Default Admin Account
+
+- Username: `admin`
+- Password: `password`
+
+## Known Issues
+
+- Only supports a subset of file/directory operations per spec.
+- No persistent session or user database; memory-only.
